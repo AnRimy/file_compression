@@ -1,0 +1,10 @@
+asarPy==1.0.1
+chardet==5.2.0
+pdf2image==1.17.0
+pillow==11.1.0
+PyMuPDF==1.25.5
+PyPDF2==3.0.1
+PyQt5==5.15.11
+PyQt5-Qt5==5.15.16
+PyQt5_sip==12.17.0
+reportlab==4.4.0
