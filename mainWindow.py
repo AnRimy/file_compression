@@ -60,7 +60,7 @@ class MainWindow(QMainWindow, QWidget):
             for i in range(len(files)):
                 block = CreateImageBlock(self, files[i])
                 self.list_imageBlock.append(block)
-                self.Hlayout.addWidget(block.button_block, alignment=Qt.AlignTop | Qt.AlignLeft)
+                self.Hlayout.addWidget(block.button_container, alignment=Qt.AlignTop | Qt.AlignLeft)
 
 
     def openSetting(self):

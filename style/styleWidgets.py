@@ -29,11 +29,12 @@ background-color: rgba(0, 173, 181, 1)
 
 
 # createImageBlock.py
+                # 
+                # padding-left: 2px;
 style_button_block = """
 QPushButton {
                 background-color:rgba(0, 128, 255, 255);
-                text-align: left;
-                 padding-left: 2px;
+                text-align: center;
             }
 QPushButton:hover {
                 background-color: rgba(0, 150, 255, 200);
@@ -53,12 +54,19 @@ QPushButton:pressed {
             }
 """
 
-label_textInfoImage = """
-color: white;
-font-size: 8px;
-font-weight: bold;
-text-align: left;
-padding-left: 2px;
+style_label_textInfoImage = """
+    color: yellow;
+    font-size: 8px;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 2px;
+    background-color: rgba(125, 125, 125, 0);
+    border: 1px solid white;
+"""
+
+style_label_minuature = """
+    background: transparent;
+    border: none;
 """
 
 
