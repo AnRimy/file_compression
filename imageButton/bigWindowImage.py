@@ -106,6 +106,7 @@ class BigWindow(QWidget):
         self.slider_rotateAngle.valueChanged.connect(self.rotateImage)
 
         self.final_pixmap = self.original_pixmap
+        self.newImage = self.image_path
 
 
     def rotateImage(self, angle):
@@ -154,7 +155,9 @@ class BigWindow(QWidget):
 
     def saveImage(self):
         sendImage = self.final_pixmap if self.slider_rotateAngle.value() != 0 else self.original_pixmap
-        self.parent.setImageInBlock(sendImage)
+        newImage_path = self.newImage if self.newImage != self.image_path else self.image_path
+
+        self.parent.setImageInBlock(sendImage, newImage_path)
         self.closBigWindow()
 
 
@@ -164,10 +167,10 @@ class BigWindow(QWidget):
 
     
     def changeImage(self):
-        newImage = filedialog.askopenfilename(title="Выберите новое изображение", filetypes=[("Image Files", "*.jpg *.jpeg")])
-        if not newImage:
-            return 0
-        self.original_pixmap = QPixmap(newImage)
+        self.newImage = filedialog.askopenfilename(title="Выберите новое изображение", filetypes=[("Image Files", "*.jpg *.jpeg")])
+        if not self.newImage:
+            self.newImage = self.image_path
+        self.original_pixmap = QPixmap(self.newImage)
         scaled_pixmap = self.original_pixmap.scaled(self.label_imageLabel.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.label_imageLabel.setPixmap(scaled_pixmap)
         self.label_imageLabel.setAlignment(Qt.AlignCenter)

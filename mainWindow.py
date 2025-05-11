@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QMainWindow, QFrame, QLineEdit, QWidget, QPushButton, QDesktopWidget, QVBoxLayout, QHBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QFrame, QLineEdit, QWidget, QPushButton, QDesktopWidget, QVBoxLayout, QHBoxLayout, QGridLayout
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.Qt import *
 from tkinter import filedialog
@@ -7,6 +7,7 @@ from tkinter import filedialog
 from imageButton.createImageBlock import CreateImageBlock
 from upBar.workBar import WorkBar
 from workZone import WorkZone
+from flowLayout import FlowLayout
 
 
 class MainWindow(QMainWindow, QWidget):
@@ -33,11 +34,12 @@ class MainWindow(QMainWindow, QWidget):
 
         # layout
         self.Vlayout = QVBoxLayout(self.main_widget)
-        self.Hlayout = QHBoxLayout(self.workZone)
+        self.flowLayout = FlowLayout(self.workZone)  
 
         # menu bar
         self.menu = self.menuBar()  
         file_menu = self.menu.addMenu('Файл')
+        # file
         open_file = QAction('Открыть', self)
         open_file.triggered.connect(self.openFileWindow)
         send_print = QAction('Печать', self)
@@ -45,9 +47,11 @@ class MainWindow(QMainWindow, QWidget):
         open_setting = QAction('Настройки', self)
         open_setting.triggered.connect(self.openSetting)
 
+
         file_menu.addAction(open_file)
         file_menu.addAction(send_print)
         file_menu.addAction(open_setting)
+
 
         # add layout
         self.Vlayout.addWidget(self.workBar)
@@ -60,7 +64,7 @@ class MainWindow(QMainWindow, QWidget):
             for i in range(len(files)):
                 block = CreateImageBlock(self, files[i])
                 self.list_imageBlock.append(block)
-                self.Hlayout.addWidget(block.button_container, alignment=Qt.AlignTop | Qt.AlignLeft)
+                self.flowLayout.addWidget(block.button_container)
 
 
     def openSetting(self):

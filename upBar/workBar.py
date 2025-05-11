@@ -5,7 +5,7 @@ import configparser
 
 from performance.compress_files import compress
 from performance.createCommonPDF import createOnePDF
-from performance.convertPDFtoPNG import convertPDFtoPNG
+from performance.convertImage import convertForMinuature, convertPDFtoJPG
 from upBar.subCompressWindow import SubCompressingSetting
 from upBar.subCreatePDFWindow import SubCreatePDFSetting
 from style.styleWidgets import style_buttonProccessing, style_frame_workBar
@@ -48,12 +48,14 @@ class WorkBar(QWidget):
         self.button_compressFiles.setIconSize(QSize(sBtnCom - 4, sBtnCom - 4))
         self.button_compressFiles.setStyleSheet(style_buttonProccessing)
 
+        # button create PDF
         self.button_createPDF = MyButton(self.frame_workBar, self.openSettingCreatePDF)
         self.button_createPDF.setFixedSize(sBtnCom, sBtnCom)
         self.button_createPDF.setIcon(QIcon('icon/pdf.png'))
         self.button_createPDF.setIconSize(QSize(sBtnCom - 10, sBtnCom - 10))
         self.button_createPDF.setStyleSheet(style_buttonProccessing)
 
+        # button convert
         self.button_convert = MyButton(self.frame_workBar, self.openSettingCreatePDF)
         self.button_convert.setFixedSize(sBtnCom, sBtnCom)
         self.button_convert.setIcon(QIcon('icon/noneImage.png'))
@@ -124,7 +126,7 @@ class WorkBar(QWidget):
     def stertConvertFiles(self):
         files = self.parent.returnFiles()
         if files:   
-            convertPDFtoPNG(files)
+            convertPDFtoJPG(files)
         else:
             messageBox(image_path='icon/information.png', title='Отсутствие изображений', text='Выберите изображения')
 
