@@ -89,7 +89,7 @@ class WorkBar(QWidget):
     
     # compress files
     def startCompress(self):
-        files = self.parent.returnFiles()
+        files = self.parent.getFiles()
         setting = self.subCompressSetting.returnSetting()
         if files:
             if setting['autoReplace']:
@@ -110,7 +110,7 @@ class WorkBar(QWidget):
 
     # create PDF
     def startCreatePDF(self):
-        files = self.parent.returnFiles()
+        files = self.parent.getFiles()
         if files:
             createOnePDF(files)
         else:
@@ -124,7 +124,7 @@ class WorkBar(QWidget):
 
     # convert files
     def stertConvertFiles(self):
-        files = self.parent.returnFiles()
+        files = self.parent.getFiles()
         if files:   
             convertPDFtoJPG(files)
         else:

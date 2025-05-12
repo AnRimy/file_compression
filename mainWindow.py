@@ -3,11 +3,13 @@ from PyQt5.QtWidgets import QMainWindow, QFrame, QLineEdit, QWidget, QPushButton
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.Qt import *
 from tkinter import filedialog
+import pyminizip
 
 from imageButton.createImageBlock import CreateImageBlock
 from upBar.workBar import WorkBar
 from workZone import WorkZone
 from flowLayout import FlowLayout
+from performance.archive_files import CreateArchive
 
 
 class MainWindow(QMainWindow, QWidget):
@@ -39,6 +41,7 @@ class MainWindow(QMainWindow, QWidget):
         # menu bar
         self.menu = self.menuBar()  
         file_menu = self.menu.addMenu('Файл')
+        file_action = self.menu.addMenu('Действие')
         # file
         open_file = QAction('Открыть', self)
         open_file.triggered.connect(self.openFileWindow)
@@ -46,12 +49,14 @@ class MainWindow(QMainWindow, QWidget):
         send_print.triggered.connect(self.sendPrint)
         open_setting = QAction('Настройки', self)
         open_setting.triggered.connect(self.openSetting)
-
+        open_compress = QAction('Создать архив', self)
+        open_compress.triggered.connect(self.createArchive)
+        # action
 
         file_menu.addAction(open_file)
         file_menu.addAction(send_print)
         file_menu.addAction(open_setting)
-
+        file_action.addAction(open_compress)
 
         # add layout
         self.Vlayout.addWidget(self.workBar)
@@ -75,7 +80,13 @@ class MainWindow(QMainWindow, QWidget):
         pass
 
 
-    def returnFiles(self):
+    def createArchive(self):
+        self.archive_window = CreateArchive(self)
+        # files = [i['path'] for i in self.getFiles()]
+        # pyminizip.compress_multiple(files, [], 'destination.zip', None, 5)
+
+
+    def getFiles(self):
         return [i.returnImageInfo() for i in self.list_imageBlock]
 
 

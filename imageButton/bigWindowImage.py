@@ -7,7 +7,7 @@ from style.styleWidgets import style_bigWindow, style_editImageInBlock, style_la
 
 class BigWindow(QWidget):
     def __init__(self, parent, mainWindow, image_path, image_pixmap):
-        super().__init__ (parent)
+        super().__init__(parent)
         self.parent = parent
         self.mainWindow = mainWindow
         self.image_path = image_path
