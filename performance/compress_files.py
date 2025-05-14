@@ -5,6 +5,7 @@ from tkinter import filedialog
 
 from openMessageBox import messageBox
 
+
 def compress(files, quality=70, autoReplace=False):
     if not autoReplace:
         path_folder = filedialog.askdirectory(title="Сохранить в")

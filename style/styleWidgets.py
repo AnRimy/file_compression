@@ -18,19 +18,44 @@ QPushButton:pressed {
 
 # workZone.py
 style_frame_workZone = """
-background-color:rgba(57, 62, 70, 1); border-radius: 10px;
+background-color:rgba(57, 62, 70, 1); 
+border-radius: 10px;
 """
 
 
 # openMessageBox.py
 style_messageBox = """
-background-color: rgba(0, 173, 181, 1)
+QMessageBox {
+    background-color: rgba(57, 62, 70, 1);
+    font-size: 16px;
+    color: white;
+}
+
+QMessageBox QLabel {
+    color: white;
+    alignment: alignCenter;
+    margin: 10px;
+}
+
+QMessageBox QPushButton {
+    background-color: rgba(0, 173, 181, 1);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    min-width: 80px;
+}
+
+QMessageBox QPushButton:hover {
+    background-color: rgba(0, 193, 201, 1);
+}
+
+QMessageBox QPushButton:pressed {
+    background-color: rgba(0, 153, 161, 1);
+}
 """
 
-
-# createImageBlock.py
-                # 
-                # padding-left: 2px;
 style_button_block = """
 QPushButton {
                 background-color:rgba(0, 128, 255, 255);
@@ -100,4 +125,78 @@ border: 1px solid white;
 
 style_frameInstrum = """
 background-color:rgba(125, 125, 12, 20);
+"""
+
+
+# archive_files.py
+style_frame_mainFrame = """
+background-color:rgba(57, 62, 70, 1); 
+border-radius: 10px;
+"""
+
+style_label_nameArch = """
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 14px;
+    color: white;
+"""
+
+style_lineEdit_nameArch = """
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 14px;
+    color: white;
+"""
+
+style_checkbox_compress_files = """
+QCheckBox{
+    background-color: transparent;
+    color: white;
+    font-size: 14px;
+}
+QCheckBox::indicator{
+    border: 1px solid white;
+    border-radius: 3px;
+}
+QCheckBox::indicator:unchecked:hover {
+    border: 1px solid blue;
+}
+QCheckBox::indicator:checked {
+    background-color: gray;
+    border: 1px solid blue;
+}
+"""
+
+style_checkbox_setPassword = """
+QCheckBox{
+    background-color: transparent;
+    color: white;
+    font-size: 14px;
+}
+QCheckBox::indicator{
+    border: 1px solid white;
+    border-radius: 3px;
+}
+QCheckBox::indicator:unchecked:hover {
+    border: 1px solid blue;
+}
+QCheckBox::indicator:checked {
+    background-color: gray;
+    border: 1px solid blue;
+}
+"""
+
+style_button_startArchive = """
+QPushButton{
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 14px;
+    color: white;
+}
+QPushButton::pressed{
+    background-color: gray;
+}
 """

@@ -112,6 +112,8 @@ class CreateImageBlock(QWidget):
     def destroy(self):
         self.parent.list_imageBlock.remove(self)
         self.parent.layout().removeWidget(self.button_container)
+        if len(self.parent.list_imageBlock) == 0:
+            self.parent.open_compress.setEnabled(False)
         self.button_container.deleteLater()
         self.deleteLater()
 

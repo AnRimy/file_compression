@@ -4,6 +4,7 @@ from PyQt5.QtCore import QSize, Qt
 from tkinter import filedialog
 
 from style.styleWidgets import style_bigWindow, style_editImageInBlock, style_labelImage, style_frameInstrum
+from performance.convertImage import convertForMinuature
 
 class BigWindow(QWidget):
     def __init__(self, parent, mainWindow, image_path, image_pixmap):
@@ -167,10 +168,13 @@ class BigWindow(QWidget):
 
     
     def changeImage(self):
-        self.newImage = filedialog.askopenfilename(title="Выберите новое изображение", filetypes=[("Image Files", "*.jpg *.jpeg")])
+        self.newImage = filedialog.askopenfilename(title="Выберите новое изображение", filetypes=[("Image Files", "*.jpg *.jpeg *.pdf")])
         if not self.newImage:
             self.newImage = self.image_path
-        self.original_pixmap = QPixmap(self.newImage)
+        elif self.newImage.endswith('.pdf'):
+            self.original_pixmap = convertForMinuature(self.newImage)
+        else:
+            self.original_pixmap = QPixmap(self.newImage)
         scaled_pixmap = self.original_pixmap.scaled(self.label_imageLabel.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.label_imageLabel.setPixmap(scaled_pixmap)
         self.label_imageLabel.setAlignment(Qt.AlignCenter)

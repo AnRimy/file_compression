@@ -114,7 +114,7 @@ class WorkBar(QWidget):
         if files:
             createOnePDF(files)
         else:
-            messageBox(image_path='icon/information.png', title='Отсутствие изображений', text='Выберите изображения')
+            messageBox(image_path='icon/information.png', title='Отсутствие документов', text='Выберите PDF файлы')
 
     def openSettingCreatePDF(self):
         if self.subCreatePDFSetting.frame_main.isVisible():
@@ -128,7 +128,7 @@ class WorkBar(QWidget):
         if files:   
             convertPDFtoJPG(files)
         else:
-            messageBox(image_path='icon/information.png', title='Отсутствие изображений', text='Выберите изображения')
+            messageBox(image_path='icon/information.png', title='Отсутствие документов', text='Выберите PDF для конвертации в JPG')
 
 
             

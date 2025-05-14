@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QMainWindow, QFrame, QLineEdit, QWidget, QPushButton
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.Qt import *
 from tkinter import filedialog
-import pyminizip
 
 from imageButton.createImageBlock import CreateImageBlock
 from upBar.workBar import WorkBar
@@ -20,7 +19,7 @@ class MainWindow(QMainWindow, QWidget):
         self.setMinimumSize(1000, 700)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.list_imageBlock = []
-        self.files = None
+        self.files = []
     
     def initUI(self):
         # main widget
@@ -49,14 +48,15 @@ class MainWindow(QMainWindow, QWidget):
         send_print.triggered.connect(self.sendPrint)
         open_setting = QAction('Настройки', self)
         open_setting.triggered.connect(self.openSetting)
-        open_compress = QAction('Создать архив', self)
-        open_compress.triggered.connect(self.createArchive)
-        # action
+        self.open_compress = QAction('Создать архив', self)
+        self.open_compress.triggered.connect(self.createArchive)
+        self.open_compress.setEnabled(False)
 
+        # action
         file_menu.addAction(open_file)
         file_menu.addAction(send_print)
         file_menu.addAction(open_setting)
-        file_action.addAction(open_compress)
+        file_action.addAction(self.open_compress)
 
         # add layout
         self.Vlayout.addWidget(self.workBar)
@@ -70,6 +70,7 @@ class MainWindow(QMainWindow, QWidget):
                 block = CreateImageBlock(self, files[i])
                 self.list_imageBlock.append(block)
                 self.flowLayout.addWidget(block.button_container)
+            self.open_compress.setEnabled(True)
 
 
     def openSetting(self):
