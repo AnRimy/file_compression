@@ -40,7 +40,7 @@ class MainWindow(QMainWindow, QWidget):
         # menu bar
         self.menu = self.menuBar()  
         file_menu = self.menu.addMenu('Файл')
-        file_action = self.menu.addMenu('Действие')
+        file_action = self.menu.addMenu('Выполнить')
         # file
         open_file = QAction('Открыть', self)
         open_file.triggered.connect(self.openFileWindow)

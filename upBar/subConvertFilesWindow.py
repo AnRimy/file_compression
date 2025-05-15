@@ -1,13 +1,13 @@
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QFrame, QLineEdit, QLabel, QHBoxLayout, QVBoxLayout, QCheckBox
+from PyQt5.QtWidgets import QFrame, QSlider, QLabel, QHBoxLayout, QVBoxLayout, QCheckBox
 
 
-class SubCreatePDFSetting(QFrame):
+class SubConvertFilesWindow(QFrame):
     def __init__(self, parent, args):
         super().__init__(parent)
         self.frame_main = QFrame(parent)
         self.frame_main.setGeometry(*args)
-        self.frame_main.setStyleSheet('border-radius: 10px; background-color: rgb(200, 200, 100)')
+        self.frame_main.setStyleSheet('border-radius: 10px; background-color: rgb(200, 200, 200)')
         self.frame_main.hide()
 
         self.widgets()
@@ -20,10 +20,14 @@ class SubCreatePDFSetting(QFrame):
         self.Vlayout = QVBoxLayout(self.frame_main)
 
         # widgets for quality 
-        self.slider_quality = QLineEdit()
+        self.slider_quality = QSlider()
+        self.slider_quality.setOrientation(Qt.Horizontal)
+        self.slider_quality.setRange(0, 100)
+        self.slider_quality.setValue(70)
         self.slider_quality.setFixedSize(160, 25)
 
         self.label_valueSlider = QLabel()
+        self.label_valueSlider.setText(str(self.slider_quality.value()))
 
         # checkBox for create folder
         self.label_textAutoReplace = QLabel()
@@ -41,6 +45,8 @@ class SubCreatePDFSetting(QFrame):
         self.Vlayout.addLayout(self.Hlayout_autoReplace)
 
 
+        # connect widgets
+        self.slider_quality.valueChanged.connect(lambda value: self.label_valueSlider.setText(str(value)))
 
     def returnSetting(self):
         return {'quality': self.slider_quality.value(), 

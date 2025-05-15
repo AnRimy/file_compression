@@ -53,11 +53,8 @@ class CreateImageBlock(QWidget):
         
         # layout 
         HLayout = QHBoxLayout(self.button_container)
-        HLayout.setContentsMargins(2, 2, 2, 2)  # Отступы: left, top, right, bottom
-        HLayout.setSpacing(8)  # Равное расстояние между виджетами
+        HLayout.setContentsMargins(2, 2, 2, 2)
         
-        # Добавляем растягивающий элемент слева
-        HLayout.addStretch(1)
 
         # miniature image 
         self.label_minuature = QLabel()

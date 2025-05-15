@@ -2,6 +2,7 @@ from PyQt5.QtGui import QPixmap, QImage
 from PIL import Image
 import io
 from tkinter import filedialog
+import os
 
 from openMessageBox import messageBox
 
@@ -28,3 +29,26 @@ def compress(files, quality=70, autoReplace=False):
             else:
                 image.save(f"{path_folder}/{name}.{form}", quality=quality)
     messageBox(image_path='icon/noneImage.png', text='Успешное сжатие', title='Успех')
+
+
+def compressForArhive(files, quality):
+    temp_files = []
+    for file_info in files:
+        if file_info['path'].lower().endswith(('.png', '.jpg', '.jpeg')):
+            qimage = file_info['pixmap'].toImage()
+            buffer = qimage.bits().asstring(qimage.byteCount())
+            img = Image.frombytes(
+                "RGBA", 
+                (qimage.width(), qimage.height()), 
+                buffer, 
+                "raw", 
+                "BGRA"
+            ).convert('RGB')
+            
+            temp_path = f"/tmp/{file_info['path'].split('/')[-1]}"
+            img.save(temp_path, quality=quality)
+            temp_files.append(temp_path)
+        else:
+            temp_files.append(file_info['path'])
+
+    return temp_files

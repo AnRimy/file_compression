@@ -26,7 +26,7 @@ border-radius: 10px;
 # openMessageBox.py
 style_messageBox = """
 QMessageBox {
-    background-color: rgba(57, 62, 70, 1);
+    background-color: rgba(57, 62, 75, 1);
     font-size: 16px;
     color: white;
 }

@@ -4,6 +4,7 @@ from tkinter import filedialog
 import pyminizip
 
 from style.styleWidgets import style_frame_mainFrame, style_label_nameArch, style_lineEdit_nameArch, style_checkbox_compress_files, style_checkbox_setPassword, style_button_startArchive
+from performance.compress_files import compressForArhive
 
 class CreateArchive(QMainWindow):
     def __init__(self, parent):
@@ -51,7 +52,7 @@ class CreateArchive(QMainWindow):
         self.slider_quality = QSlider(self.frame_mainFrame,
         orientation=Qt.Horizontal)
         self.slider_quality.setRange(0, 100)
-        self.slider_quality.setValue(100)
+        self.slider_quality.setValue(70)
         self.slider_quality.setGeometry(10, 100, 150, 25)
         self.slider_quality.setStyleSheet('background-color: transparent;')
         self.slider_quality.hide()
@@ -91,19 +92,26 @@ class CreateArchive(QMainWindow):
         self.checkbox_setPassword.stateChanged.connect(self.setPassword)
         self.button_startArchive.pressed.connect(self.startArchive)
 
-    
+
+    # start archive
     def startArchive(self):
-        path_folder = filedialog.askdirectory(title="Сохранить в")
+        path_folder = filedialog.askdirectory(title='Сохранить в')
         if not path_folder:
             return 0 
         full_path = path_folder+'/'+self.lineEdit_nameArch.text()+'.zip'
-        files = [i['path'] for i in self.parent.getFiles()]
+        files = self.parent.getFiles()
+        if self.checkbox_compress_files.isChecked():
+            files = compressForArhive(files, self.slider_quality.value())
+        else:
+            files = [f['path'] for f in files]
+
         if self.checkbox_setPassword.isChecked():
             pyminizip.compress_multiple(files, [], full_path, self.lineEdit_password.text(), 5)
         else:
             pyminizip.compress_multiple(files, [], full_path, None, 5)
 
 
+    # hide show slider quality
     def correctQuality(self, state):
         if state == Qt.Checked:
             self.slider_quality.show()
@@ -113,6 +121,7 @@ class CreateArchive(QMainWindow):
             self.label_valueSlider.hide()
 
 
+    # hide show lineEdit password
     def setPassword(self, state):
         if state == Qt.Checked:
             self.lineEdit_password.show()

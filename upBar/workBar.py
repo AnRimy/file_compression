@@ -8,6 +8,7 @@ from performance.createCommonPDF import createOnePDF
 from performance.convertImage import convertForMinuature, convertPDFtoJPG
 from upBar.subCompressWindow import SubCompressingSetting
 from upBar.subCreatePDFWindow import SubCreatePDFSetting
+from upBar.subConvertFilesWindow import SubConvertFilesWindow
 from style.styleWidgets import style_buttonProccessing, style_frame_workBar
 from openMessageBox import messageBox
 
@@ -56,7 +57,7 @@ class WorkBar(QWidget):
         self.button_createPDF.setStyleSheet(style_buttonProccessing)
 
         # button convert
-        self.button_convert = MyButton(self.frame_workBar, self.openSettingCreatePDF)
+        self.button_convert = MyButton(self.frame_workBar, self.openSettingConvertFiles)
         self.button_convert.setFixedSize(sBtnCom, sBtnCom)
         self.button_convert.setIcon(QIcon('icon/noneImage.png'))
         self.button_convert.setIconSize(QSize(sBtnCom - 4, sBtnCom - 4))
@@ -70,20 +71,26 @@ class WorkBar(QWidget):
         # connect button
         self.button_compressFiles.clicked.connect(self.startCompress)
         self.button_createPDF.clicked.connect(self.startCreatePDF)
-        self.button_convert.clicked.connect(self.stertConvertFiles)
+        self.button_convert.clicked.connect(self.startConvertFiles)
 
         # create setting windows
         QTimer.singleShot(0, self.get_button_position)
 
     def get_button_position(self):
+        shift_x = -65
         self.subCompressSetting = SubCompressingSetting(self.parent, 
-                    (self.button_compressFiles.pos().x()+10, 
+                    (self.button_compressFiles.pos().x()+shift_x, 
                     self.button_compressFiles.pos().y()+85, 
                     200, 
                     100))
         self.subCreatePDFSetting = SubCreatePDFSetting(self.parent, 
-                    (self.button_createPDF.pos().x()+10, 
+                    (self.button_createPDF.pos().x()+shift_x, 
                     self.button_createPDF.pos().y()+85, 
+                    200, 
+                    100))
+        self.subConvertFilesSetting = SubConvertFilesWindow(self.parent, 
+                    (self.button_convert.pos().x()+shift_x, 
+                    self.button_convert.pos().y()+85, 
                     200, 
                     100))
     
@@ -122,8 +129,15 @@ class WorkBar(QWidget):
         else:
             self.subCreatePDFSetting.frame_main.show()
 
+
+    def openSettingConvertFiles(self):
+        if self.subConvertFilesSetting.frame_main.isVisible():
+            self.subConvertFilesSetting.frame_main.hide()
+        else:
+            self.subConvertFilesSetting.frame_main.show()
+
     # convert files
-    def stertConvertFiles(self):
+    def startConvertFiles(self):
         files = self.parent.getFiles()
         if files:   
             convertPDFtoJPG(files)
