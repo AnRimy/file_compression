@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QFrame, QPushButton, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QFrame, QHBoxLayout, QToolButton
 from PyQt5.QtCore import QSize, Qt, QTimer
 from PyQt5.QtGui import QIcon, QPixmap
 import configparser
@@ -12,11 +12,13 @@ from upBar.subConvertFilesWindow import SubConvertFilesWindow
 from style.styleWidgets import style_buttonProccessing, style_frame_workBar
 from openMessageBox import messageBox
 
-class MyButton(QPushButton):
-    def __init__(self, workbar_instance, workFunc):
+class MyButton(QToolButton):
+    def __init__(self, workbar_instance, workFunc, text):
         super().__init__(workbar_instance)
         self.workbar_instance = workbar_instance
         self.workFunc = workFunc
+        self.setText(text)
+        self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.RightButton:
@@ -34,33 +36,35 @@ class WorkBar(QWidget):
 
     def widgets(self):
         # label work bar
+        sWorkBar = 85
         self.frame_workBar = QFrame(self.parent.main_widget)
-        self.frame_workBar.setFixedHeight(70)
+        self.frame_workBar.setFixedHeight(sWorkBar)
         self.frame_workBar.setStyleSheet(style_frame_workBar)
 
         # layout
         layout = QHBoxLayout(self.frame_workBar)
 
         # button for compress files
-        sBtnCom = 50
-        self.button_compressFiles = MyButton(self.frame_workBar, self.openSettingCompress)
-        self.button_compressFiles.setFixedSize(sBtnCom, sBtnCom)
+        sBtnCom = sWorkBar - 30
+        sBtnIcon = sBtnCom - 14
+        self.button_compressFiles = MyButton(self.frame_workBar, self.openSettingCompress, 'Сжать')
+        self.button_compressFiles.setFixedSize(sBtnCom+10, sBtnCom+10)
         self.button_compressFiles.setIcon(QIcon('icon/compression.png'))
-        self.button_compressFiles.setIconSize(QSize(sBtnCom - 4, sBtnCom - 4))
+        self.button_compressFiles.setIconSize(QSize(sBtnIcon, sBtnIcon))
         self.button_compressFiles.setStyleSheet(style_buttonProccessing)
 
         # button create PDF
-        self.button_createPDF = MyButton(self.frame_workBar, self.openSettingCreatePDF)
-        self.button_createPDF.setFixedSize(sBtnCom, sBtnCom)
+        self.button_createPDF = MyButton(self.frame_workBar, self.openSettingCreatePDF, 'Один PDF')
+        self.button_createPDF.setFixedSize(sBtnCom+10, sBtnCom+10)
         self.button_createPDF.setIcon(QIcon('icon/pdf.png'))
-        self.button_createPDF.setIconSize(QSize(sBtnCom - 10, sBtnCom - 10))
+        self.button_createPDF.setIconSize(QSize(sBtnIcon, sBtnIcon))
         self.button_createPDF.setStyleSheet(style_buttonProccessing)
 
         # button convert
-        self.button_convert = MyButton(self.frame_workBar, self.openSettingConvertFiles)
-        self.button_convert.setFixedSize(sBtnCom, sBtnCom)
-        self.button_convert.setIcon(QIcon('icon/noneImage.png'))
-        self.button_convert.setIconSize(QSize(sBtnCom - 4, sBtnCom - 4))
+        self.button_convert = MyButton(self.frame_workBar, self.openSettingConvertFiles, 'Конверт')
+        self.button_convert.setFixedSize(sBtnCom+10, sBtnCom+10)
+        self.button_convert.setIcon(QIcon('icon/convertFiles.png'))
+        self.button_convert.setIconSize(QSize(sBtnIcon, sBtnIcon))
         self.button_convert.setStyleSheet(style_buttonProccessing)
 
         # add layout
@@ -109,11 +113,13 @@ class WorkBar(QWidget):
         else:
             messageBox(image_path='icon/information.png', title='Отсутствие изображений', text='Выберите изображения')
 
+
     def openSettingCompress(self):
         if self.subCompressSetting.frame_main.isVisible():
             self.subCompressSetting.frame_main.hide()
         else:
             self.subCompressSetting.frame_main.show()
+
 
     # create PDF
     def startCreatePDF(self):
@@ -123,18 +129,13 @@ class WorkBar(QWidget):
         else:
             messageBox(image_path='icon/information.png', title='Отсутствие документов', text='Выберите PDF файлы')
 
+
     def openSettingCreatePDF(self):
         if self.subCreatePDFSetting.frame_main.isVisible():
             self.subCreatePDFSetting.frame_main.hide()
         else:
             self.subCreatePDFSetting.frame_main.show()
 
-
-    def openSettingConvertFiles(self):
-        if self.subConvertFilesSetting.frame_main.isVisible():
-            self.subConvertFilesSetting.frame_main.hide()
-        else:
-            self.subConvertFilesSetting.frame_main.show()
 
     # convert files
     def startConvertFiles(self):
@@ -143,6 +144,13 @@ class WorkBar(QWidget):
             convertPDFtoJPG(files)
         else:
             messageBox(image_path='icon/information.png', title='Отсутствие документов', text='Выберите PDF для конвертации в JPG')
+
+    
+    def openSettingConvertFiles(self):
+        if self.subConvertFilesSetting.frame_main.isVisible():
+            self.subConvertFilesSetting.frame_main.hide()
+        else:
+            self.subConvertFilesSetting.frame_main.show()
 
 
             

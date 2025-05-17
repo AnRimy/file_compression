@@ -4,20 +4,24 @@ background-color:rgba(34, 40, 49, 1); border-radius: 10px;
 """
 
 style_buttonProccessing = """
-QPushButton {
+QToolButton {
                 background-color: rgba(0, 173, 181, 255);
+                font-family: "Segoe UI", "SF Pro Display", -apple-system, sans-serif;
+                font-size: 10px;
+                font-weight: 500;
+                color: #2a2a2a;
             }
-QPushButton:hover {
+QToolButton:hover {
                 background-color: rgba(0, 150, 255, 200);
             }
-QPushButton:pressed {
+QToolButton:pressed {
                 background-color: gray;
             }
         """
 
 
 # workZone.py
-style_frame_workZone = """
+style_label_workZone = """
 background-color:rgba(57, 62, 70, 1); 
 border-radius: 10px;
 """

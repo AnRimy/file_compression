@@ -31,7 +31,7 @@ class MainWindow(QMainWindow, QWidget):
         self.workBar = WorkBar(self).frame_workBar
 
         # work zone
-        self.workZone = WorkZone(self).frame_workZone
+        self.workZone = WorkZone(self).label_workZone
 
         # layout
         self.Vlayout = QVBoxLayout(self.main_widget)
