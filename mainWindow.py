@@ -44,18 +44,12 @@ class MainWindow(QMainWindow, QWidget):
         # file
         open_file = QAction('Открыть', self)
         open_file.triggered.connect(self.openFileWindow)
-        send_print = QAction('Печать', self)
-        send_print.triggered.connect(self.sendPrint)
-        open_setting = QAction('Настройки', self)
-        open_setting.triggered.connect(self.openSetting)
         self.open_compress = QAction('Создать архив', self)
         self.open_compress.triggered.connect(self.createArchive)
         self.open_compress.setEnabled(False)
 
         # action
         file_menu.addAction(open_file)
-        file_menu.addAction(send_print)
-        file_menu.addAction(open_setting)
         file_action.addAction(self.open_compress)
 
         # add layout
@@ -64,7 +58,7 @@ class MainWindow(QMainWindow, QWidget):
        
 
     def openFileWindow(self):
-        files = filedialog.askopenfilenames(title="Выберите изображения", filetypes=[("Image Files", "*.jpg *.jpeg *.pdf"), ("All Files", "*.*")])
+        files = filedialog.askopenfilenames(title="Выберите изображения", filetypes=[("Image Files", "*.jpg *.jpeg *.pdf"), ("PDF files", "*.pdf"), ("All Files", "*.*")])
         if files:
             for i in range(len(files)):
                 block = CreateImageBlock(self, files[i])
@@ -73,18 +67,8 @@ class MainWindow(QMainWindow, QWidget):
             self.open_compress.setEnabled(True)
 
 
-    def openSetting(self):
-        pass
-
-
-    def sendPrint(self):
-        pass
-
-
     def createArchive(self):
         self.archive_window = CreateArchive(self)
-        # files = [i['path'] for i in self.getFiles()]
-        # pyminizip.compress_multiple(files, [], 'destination.zip', None, 5)
 
 
     def getFiles(self):

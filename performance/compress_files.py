@@ -7,8 +7,8 @@ import os
 from openMessageBox import messageBox
 
 
-def compress(files, quality=70, autoReplace=False):
-    if not autoReplace:
+def compress(files, setting):
+    if not setting['autoReplace']:
         path_folder = filedialog.askdirectory(title="Сохранить в")
         if not path_folder:
             return 0
@@ -23,11 +23,11 @@ def compress(files, quality=70, autoReplace=False):
         with img as image:
             name = oneImage['path'].split('/')[-1].split('.')[0]
             form = oneImage['path'].split('.')[-1]
-            if autoReplace:
+            if setting['autoReplace']:
                 folder = oneImage['path'][::-1].split('/', maxsplit=1)[1][::-1]
-                image.save(f"{folder}/{name}.{form}", quality=quality)
+                image.save(f"{folder}/{name}.{form}", quality=setting['quality'])
             else:
-                image.save(f"{path_folder}/{name}.{form}", quality=quality)
+                image.save(f"{path_folder}/{name}.{form}", quality=setting['quality'])
     messageBox(image_path='icon/noneImage.png', text='Успешное сжатие', title='Успех')
 
 

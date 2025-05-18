@@ -81,35 +81,31 @@ class WorkBar(QWidget):
         QTimer.singleShot(0, self.get_button_position)
 
     def get_button_position(self):
-        shift_x = -65
+        shift_x = -60
+        shift_y = 100
         self.subCompressSetting = SubCompressingSetting(self.parent, 
                     (self.button_compressFiles.pos().x()+shift_x, 
-                    self.button_compressFiles.pos().y()+85, 
+                    self.button_compressFiles.pos().y()+shift_y, 
                     200, 
                     100))
         self.subCreatePDFSetting = SubCreatePDFSetting(self.parent, 
                     (self.button_createPDF.pos().x()+shift_x, 
-                    self.button_createPDF.pos().y()+85, 
+                    self.button_createPDF.pos().y()+shift_y, 
                     200, 
                     100))
         self.subConvertFilesSetting = SubConvertFilesWindow(self.parent, 
                     (self.button_convert.pos().x()+shift_x, 
-                    self.button_convert.pos().y()+85, 
+                    self.button_convert.pos().y()+shift_y, 
                     200, 
                     100))
     
     # compress files
     def startCompress(self):
         files = self.parent.getFiles()
-        setting = self.subCompressSetting.returnSetting()
+        setting = self.subCompressSetting.getSetting()
         if files:
-            if setting['autoReplace']:
-                compress(files=files, 
-                        quality=setting['quality'],
-                        autoReplace=True)
-            else:
-                compress(files=files,
-                        quality=setting['quality'])
+            compress(files, setting)
+
         else:
             messageBox(image_path='icon/information.png', title='Отсутствие изображений', text='Выберите изображения')
 
@@ -140,8 +136,9 @@ class WorkBar(QWidget):
     # convert files
     def startConvertFiles(self):
         files = self.parent.getFiles()
+        setting = self.subConvertFilesSetting.getSetting()
         if files:   
-            convertPDFtoJPG(files)
+            convertPDFtoJPG(files, setting)
         else:
             messageBox(image_path='icon/information.png', title='Отсутствие документов', text='Выберите PDF для конвертации в JPG')
 

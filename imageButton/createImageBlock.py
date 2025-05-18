@@ -40,7 +40,7 @@ class CreateImageBlock(QWidget):
         self.label_background.setGeometry(0, 0, 150, 100)
         
         infoImage = self.getInfoImage(self.imagePath)
-        if infoImage['expen'] == 'pdf':
+        if infoImage['extension'] == 'pdf':
             self.image_pixmap = convertForMinuature(self.imagePath)
         else:
             self.image_pixmap = QPixmap(self.imagePath)
@@ -55,7 +55,6 @@ class CreateImageBlock(QWidget):
         HLayout = QHBoxLayout(self.button_container)
         HLayout.setContentsMargins(2, 2, 2, 2)
         
-
         # miniature image 
         self.label_minuature = QLabel()
         self.label_minuature.setPixmap(self.image_pixmap.scaled(75, 70, Qt.KeepAspectRatio, Qt.SmoothTransformation))
@@ -65,8 +64,7 @@ class CreateImageBlock(QWidget):
         # text info 
         self.label_textInfoImage = QLabel()
         self.label_textInfoImage.setFixedSize(68, 96)
-        self.label_textInfoImage.setText(f"""name: {infoImage['name']+'.'+infoImage['expen']}\n
-    size: {infoImage['size']:.2f}""")
+        self.label_textInfoImage.setText(f"""name:\n {infoImage['name']+'.'+infoImage['extension']}\n\nsize:\n {infoImage['size']}""")
         self.label_textInfoImage.setWordWrap(True)
         self.label_textInfoImage.setStyleSheet(style_label_textInfoImage)
         
@@ -74,7 +72,6 @@ class CreateImageBlock(QWidget):
         HLayout.addWidget(self.label_minuature)
         HLayout.addWidget(self.label_textInfoImage)
         
-        # Добавляем растягивающий элемент справа
         HLayout.addStretch(1)
         
         # delete button 
@@ -102,8 +99,7 @@ class CreateImageBlock(QWidget):
         self.label_minuature.setPixmap(image_pixmap.scaled(75, 70, Qt.KeepAspectRatio, Qt.SmoothTransformation))
         self.image_pixmap = image_pixmap
         infoImage = self.getInfoImage(image_path)
-        self.label_textInfoImage.setText(f"""name: {infoImage['name']+'.'+infoImage['expen']}\n
-    size: {infoImage['size']:.2f}""")
+        self.label_textInfoImage.setText(f"""name:\n {infoImage['name']+'.'+infoImage['extension']}\n\nsize:\n {infoImage['size']}""")
 
 
     def destroy(self):
@@ -118,9 +114,22 @@ class CreateImageBlock(QWidget):
     def getInfoImage(self, imagePath):
         file_path = Path(imagePath)
         stat_info = file_path.stat()
-
-        infoImage = {'name': imagePath.split('/')[-1].split('.')[0],
-        'expen': imagePath.split('.')[-1],
-        'size': stat_info.st_size / (1024 ** 2)}
+        
+        size_bytes = stat_info.st_size
+        if size_bytes < 1024:
+            size_str = f"{size_bytes} байт"
+        elif size_bytes < 1024**2:
+            size_str = f"{size_bytes / 1024:.2f} КБ"
+        elif size_bytes < 1024**3:
+            size_str = f"{size_bytes / (1024**2):.2f} МБ"
+        else:
+            size_str = f"{size_bytes / (1024**3):.2f} ГБ"
+        
+        infoImage = {
+            'name': file_path.stem,
+            'extension': file_path.suffix[1:].lower(),
+            'size_bytes': size_bytes,
+            'size': size_str
+        }
         return infoImage
 

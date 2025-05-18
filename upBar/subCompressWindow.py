@@ -7,7 +7,7 @@ class SubCompressingSetting(QFrame):
         super().__init__(parent)
         self.frame_main = QFrame(parent)
         self.frame_main.setGeometry(*args)
-        self.frame_main.setStyleSheet('border-radius: 10px; background-color: rgb(100, 100, 100)')
+        self.frame_main.setStyleSheet('border-radius: 10px; background-color: rgba(0, 173, 181, 255)')
         self.frame_main.hide()
 
         self.widgets()
@@ -47,7 +47,7 @@ class SubCompressingSetting(QFrame):
         self.slider_quality.valueChanged.connect(lambda value: self.label_valueSlider.setText(str(value)))
 
 
-    def returnSetting(self):
+    def getSetting(self):
         return {'quality': self.slider_quality.value(), 
         'autoReplace': self.checkBox_autoReplace.isChecked()}
 

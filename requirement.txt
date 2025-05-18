@@ -1,7 +1,9 @@
 asarPy==1.0.1
 chardet==5.2.0
+pathlib==1.0.1
 pdf2image==1.17.0
 pillow==11.1.0
+pyminizip==0.2.6
 PyMuPDF==1.25.5
 PyPDF2==3.0.1
 PyQt5==5.15.11
